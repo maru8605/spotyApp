@@ -9,38 +9,49 @@ import {map} from 'rxjs/operators';
 export class SpotifyService {
   constructor(private http: HttpClient) {
     console.log('servicio listo');
-
   }
 
-  getQuery( query: string) {
+  getQuery(query: string) {
     const URL = `https://api.spotify.com/v1/${query}`;
 
     const headers = new HttpHeaders({
       Authorization:
-        'Bearer BQBzUYYI5O2QL7QHmrcaB8fNMPSA6kPAWre-nqnfQKtO0MGB4XgXr8H8ZhJ1Iz3eB6tSyCbcqthy99EBcwKUuk9QQEhJQTZB8LyOA400tUNGXuv3ok0',
+        'Bearer BQBGrTo7dI5J9O9K9eBeUwwU7111L1UUdcu6QSW2bvcZe7bJruOyZCwaVisxi2kKXZD3nlxOYDClNBZTRYl3uZZRnIhoAwLaD8O9gv4AGGH9NwF0DRI',
     });
 
     return this.http.get(URL, { headers });
   }
 
   getNewReleases() {
-
-    return this.getQuery('browse/new-releases')
-      .pipe( map((data: any) => {
+    
+  
+    return this.getQuery('browse/new-releases').pipe(
+      map((data: any) => {
         console.log(data.albums.items);
         return data.albums.items;
       })
     );
-  
-      
   }
 
-  getArtist(termino:string) {
-
+  getArtists(termino: string) {
     return this.getQuery(`search?q=${termino}&type=artist&limit=15`).pipe(
       map((data: any) => {
         console.log(data.artists.items);
         return data.artists.items;
+      })
+    );
+  }
+
+  getArtist(id: string) {
+    return this.getQuery(`artists/${id}`);
+  }
+
+  getTopTracks(id: string) {
+    return this.getQuery(`artists/${id}/top-tracks?market=US`)
+      .pipe(
+      map((data: any) => {
+
+        return data.tracks;
       })
     );
   }
