@@ -36,7 +36,8 @@
             <td>{{tracks.album.name}}</td>
             <td>{{tracks.name}}</td>
             <td>
-              <audio [src]="tracks.preview_url" controls></audio>
+              <!-- <audio [src]="tracks.preview_url" controls></audio> -->
+              <iframe style="border-radius:12px" [src]="tracks.uri | domseguro:'https://open.spotify.com/embed?uri='" width="100%" height="102" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </td>
           </tr>
         </tbody>
